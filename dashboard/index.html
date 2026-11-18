@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Plataforma profesional de gestión de cartas digitales y códigos QR para gastronomía."
+    />
+    <title>MenuCraft QR | Gestor de Cartas Digitales</title>
+    
+    <!-- FUENTES GOOGLE: Outfit para títulos elegantes y DM Sans para el cuerpo de texto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- HOJA DE ESTILOS DEL DASHBOARD -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+
+    <!-- BARRA SUPERIOR: Identidad de la marca y perfil de administración -->
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Ir al inicio">
+        <span class="brand__mark" aria-hidden="true">MC</span>
+        <span>
+          <strong>MenuCraft QR</strong>
+          <small>Plataforma Gastronómica</small>
+        </span>
+      </a>
+
+      <div class="teacher">
+        <span class="teacher__avatar" aria-hidden="true">PA</span>
+        <span class="teacher__text">
+          <small>Administración</small>
+          <strong>Panel Admin</strong>
+        </span>
+      </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="page-shell">
+      
+      <!-- ENCABEZADO DE PÁGINA Y RESUMEN ESTADÍSTICO -->
+      <section class="page-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Gestión Gastronómica · Sistema QR</p>
+          <h1 id="page-title">Tablero de Comercios y Menús Digitales</h1>
+          <p class="page-heading__intro">
+            Administrá tus locales gastronómicos, elegí estéticas visuales y gestioná los Códigos QR para las mesas en tiempo real.
+          </p>
+        </div>
+
+        <!-- RESUMEN DINÁMICO: Contadores que se actualizan con JS -->
+        <div class="summary" aria-label="Resumen del curso">
+          <div>
+            <strong id="summary-total">0</strong>
+            <span>comercios</span>
+          </div>
+          <div>
+            <strong id="summary-published">0</strong>
+            <span>publicados</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÁREA DE TRABAJO (GRID DE DOS COLUMNAS) -->
+      <section class="workspace" aria-label="Consulta de comercios">
+        
+        <!-- COLUMNA 1: SELECTOR Y LISTADO DE COMERCIOS -->
+        <div class="selector-panel">
+          
+          <!-- Botón principal para agregar un nuevo comercio -->
+          <div class="panel-actions">
+            <button class="button button--accent" type="button" id="btn-open-create-modal">
+              + Nuevo comercio
+            </button>
+          </div>
+
+          <label for="comercio">Elegí un comercio</label>
+          <div class="select-wrap">
+            <select id="comercio" name="comercio">
+              <!-- Las opciones se generan dinámicamente desde JavaScript -->
+            </select>
+          </div>
+          <p class="field-help">La información se actualizará al cambiar la selección.</p>
+
+          <div class="commerce-list" aria-labelledby="commerce-list-title">
+            <div class="section-label">
+              <h2 id="commerce-list-title">Comercios del curso</h2>
+              <span id="commerce-list-count">0 lugares</span>
+            </div>
+
+            <!-- Lista interactiva de comercios renderizada por JS -->
+            <ol id="commerce-ol-list">
+              <!-- Cargado dinámicamente -->
+            </ol>
+          </div>
+        </div>
+
+        <!-- COLUMNA 2: TARJETA DEL COMERCIO SELECCIONADO (DETALLE + QR) -->
+        <article class="commerce-card" id="commerce-card-detail">
+          
+          <!-- Encabezado de la tarjeta -->
+          <div class="commerce-card__header">
+            <div>
+              <span class="status" id="card-status-badge">
+                <i aria-hidden="true"></i> <span id="card-status-text">Cargando...</span>
+              </span>
+              <h2 id="card-name">Cargando...</h2>
+              <p id="card-type">Cargando...</p>
+            </div>
+            <span class="commerce-number" id="card-number" aria-label="Número de comercio">01</span>
+          </div>
+
+          <!-- Cuerpo de la tarjeta -->
+          <div class="commerce-card__body">
+            
+            <!-- DATOS DEL SITIO Y ENLACES -->
+            <div class="site-data">
+              <div class="data-block">
+                <span>Nombre exacto en Netlify</span>
+                <code id="card-netlify-name">Pendiente</code>
+              </div>
+
+              <div class="data-block">
+                <span>Dirección pública asignada</span>
+                <a id="card-url-link" href="#" target="_blank" rel="noopener noreferrer">
+                  Sin dirección pública cargada
+                </a>
+              </div>
+
+              <div class="data-block">
+                <span>Estética visual asignada</span>
+                <code id="card-style-name">☕ Bistro Cálido (theme-bistro.css)</code>
+              </div>
+
+              <!-- ACCIONES PRINCIPALES DEL COMERCIO -->
+              <div class="actions" aria-label="Acciones del comercio">
+                <a class="button button--primary" id="btn-open-site" href="#" target="_blank" rel="noopener noreferrer">
+                  Abrir carta
+                </a>
+                <button class="button button--secondary" id="btn-copy-url" type="button">
+                  Copiar URL
+                </button>
+                <button class="button button--secondary" id="btn-edit-commerce" type="button">
+                  Editar
+                </button>
+                <button class="button button--danger" id="btn-delete-commerce" type="button">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+
+            <!-- VISOR Y GENERADOR DE CÓDIGO QR -->
+            <div class="qr-panel">
+              <div class="qr-box" id="qr-container" aria-label="Código QR del comercio">
+                <div class="qr-placeholder" id="qr-placeholder">
+                  <span>QR</span>
+                </div>
+                <img id="qr-image" src="" alt="Código QR del comercio" class="qr-img is-hidden" />
+              </div>
+              <strong id="qr-title">Escaneá para abrir la carta</strong>
+              <p id="qr-description">El código estará disponible cuando se cargue la URL pública.</p>
+
+              <!-- Botón para descargar la imagen del QR -->
+              <button class="button button--secondary button--small is-hidden" id="btn-download-qr" type="button">
+                Descargar QR
+              </button>
+            </div>
+          </div>
+
+          <!-- Pie de la tarjeta -->
+          <footer class="commerce-card__footer">
+            <span id="card-footer-status">Estado: pendiente</span>
+            <span id="card-footer-revision">Última actualización: hoy</span>
+          </footer>
+        </article>
+      </section>
+    </main>
+
+    <!-- MODAL PARA ALTA Y EDICIÓN DE COMERCIOS -->
+    <div class="modal-overlay is-hidden" id="commerce-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="modal-title">Nuevo Comercio</h2>
+          <button type="button" class="modal-close" id="btn-close-modal" aria-label="Cerrar modal">&times;</button>
+        </div>
+        
+        <form id="commerce-form" class="modal-form">
+          <input type="hidden" id="form-commerce-id" value="" />
+          <div class="form-alert is-hidden" id="form-alert-msg"></div>
+          
+          <div class="form-group">
+            <label for="form-nombre">Nombre del comercio *</label>
+            <input type="text" id="form-nombre" required placeholder="Ej: Bruma Café" />
+          </div>
+
+          <div class="form-group">
+            <label for="form-tipo">Tipo de comercio *</label>
+            <input type="text" id="form-tipo" required placeholder="Ej: Cafetería, Bar, Restaurante" />
+          </div>
+
+          <div class="form-group">
+            <label for="form-netlify-name">Nombre de subdominio / proyecto</label>
+            <input type="text" id="form-netlify-name" placeholder="Ej: bruma-cafe-2026" />
+          </div>
+
+          <div class="form-group">
+            <label for="form-url">Dirección pública personalizada (URL)</label>
+            <input type="url" id="form-url" placeholder="Ej: https://bruma-cafe-2026.netlify.app" />
+            <small class="field-help">Si ingresás una URL propia, el Código QR se vinculará a esa dirección pública.</small>
+          </div>
+
+          <div class="form-group">
+            <label>Estética visual del comercio *</label>
+            <div class="theme-selector-grid" id="theme-selector-grid">
+              
+              <div class="theme-card is-selected" data-style="bistro">
+                <div class="theme-card-header">
+                  <strong>☕ Bistro Cálido</strong>
+                  <span class="theme-check">✓</span>
+                </div>
+                <div class="theme-swatches">
+                  <span class="swatch" style="background-color: #F5EFE6;"></span>
+                  <span class="swatch" style="background-color: #C86D51;"></span>
+                  <span class="swatch" style="background-color: #2C221E;"></span>
+                </div>
+                <small>Ideal para cafeterías, té y pastelerías artesanas.</small>
+              </div>
+
+              <div class="theme-card" data-style="urbano">
+                <div class="theme-card-header">
+                  <strong>🍸 Urbano Moderno</strong>
+                  <span class="theme-check">✓</span>
+                </div>
+                <div class="theme-swatches">
+                  <span class="swatch" style="background-color: #F0F2F5;"></span>
+                  <span class="swatch" style="background-color: #174C38;"></span>
+                  <span class="swatch" style="background-color: #121413;"></span>
+                </div>
+                <small>Ideal para gastrobares, bistrós y coctelerías.</small>
+              </div>
+
+              <div class="theme-card" data-style="retro">
+                <div class="theme-card-header">
+                  <strong>🍺 Retro Clásico</strong>
+                  <span class="theme-check">✓</span>
+                </div>
+                <div class="theme-swatches">
+                  <span class="swatch" style="background-color: #EFE6D5;"></span>
+                  <span class="swatch" style="background-color: #C58F49;"></span>
+                  <span class="swatch" style="background-color: #2A1D17;"></span>
+                </div>
+                <small>Ideal para cervecerías, bodegones y hamburgueserías.</small>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="button button--secondary" id="btn-cancel-modal">Cancelar</button>
+            <button type="submit" class="button button--primary" id="btn-save-modal">Guardar comercio</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL PROPIO DE CONFIRMACIÓN PARA ELIMINAR COMERCIO -->
+    <div class="modal-overlay is-hidden" id="delete-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="delete-modal-title">¿Eliminar comercio?</h2>
+          <button type="button" class="modal-close" id="btn-close-delete-modal" aria-label="Cerrar modal">&times;</button>
+        </div>
+        
+        <div class="modal-body-content">
+          <p id="delete-modal-message">¿Estás seguro de que querés eliminar este comercio? Esta acción no se puede deshacer.</p>
+        </div>
+
+        <div class="modal-actions modal-actions--confirm">
+          <button type="button" class="button button--secondary" id="btn-cancel-delete">Cancelar</button>
+          <button type="button" class="button button--primary" id="btn-confirm-delete">Sí, eliminar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPT DE LÓGICA DEL DASHBOARD -->
+    <script src="js/comercios.js"></script>
+  </body>
+</html>
